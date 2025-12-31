@@ -18,255 +18,35 @@ const AFFILIATE_IDS = {
 let currentRates = [];
 
 // ============================================================================
-// API CHANGENOW
+// ANCIENNES FONCTIONS API (maintenant gérées par Netlify Function)
 // ============================================================================
-
-async function getChangeNowRate(from, to, amount) {
-    try {
-        // 🔑 Clé API ChangeNow configurée ✅
-        const url = `https://api.changenow.io/v1/exchange-amount/${amount}/${from}_${to}/?api_key=16b13fe15b7c2a05ac1104aba4de256361d8e2b643f15d724bcc07538cd8dccd`;
-        const response = await fetch(url);
-
-        if (!response.ok) throw new Error('ChangeNow API error');
-
-        const data = await response.json();
-
-        return {
-            exchange: 'ChangeNow',
-            estimatedAmount: parseFloat(data.estimatedAmount),
-            rate: parseFloat(data.estimatedAmount) / amount,
-            url: `https://changenow.io/exchange?from=${from}&to=${to}&amount=${amount}&ref_id=${AFFILIATE_IDS.changenow}`
-        };
-    } catch (error) {
-        console.error('ChangeNow error:', error);
-        return null;
-    }
-}
+// Les appels API directs ont été déplacés vers /.netlify/functions/get-rates
+// pour sécuriser les clés API (non exposées côté client)
 
 // FixedFloat removed - requires user data storage (IP, user-agent) for 1 year
 
-// ============================================================================
-// API STEALTHEX
-// ============================================================================
-
-async function getStealthEXRate(from, to, amount) {
-    try {
-        // 🔑 Clé API StealthEX configurée ✅
-        const response = await fetch(
-            `https://api.stealthex.io/api/v2/estimate/${from}/${to}?amount=${amount}&api_key=b66e38ef-2b8e-4df3-bc2a-13bd1c44c105&fixed=false`
-        );
-
-        if (!response.ok) throw new Error('StealthEX API error');
-
-        const data = await response.json();
-
-        return {
-            exchange: 'StealthEX',
-            estimatedAmount: parseFloat(data.estimated_amount),
-            rate: parseFloat(data.estimated_amount) / amount,
-            url: `https://stealthex.io/?ref=${AFFILIATE_IDS.stealthex}`
-        };
-    } catch (error) {
-        console.error('StealthEX error:', error);
-        return null;
-    }
-}
-
-// ============================================================================
-// API EXOLIX
-// ============================================================================
-
-async function getExolixRate(from, to, amount) {
-    try {
-        // 🔑 API Key Exolix configurée ✅
-        const response = await fetch(
-            `https://exolix.com/api/v2/rate?coinFrom=${from.toUpperCase()}&coinTo=${to.toUpperCase()}&amount=${amount}&rateType=float`,
-            {
-                headers: {
-                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxlYm9ueG1yQGdtYWlsLmNvbSIsInN1YiI6NDc1NDMsImlhdCI6MTc2NzE4MTIxNSwiZXhwIjoxOTI0OTY5MjE1fQ.LMvovfoZmca3yAgZ_8iBV9KD9AXqt-2WQhpPHf_ss24'
-                }
-            }
-        );
-
-        if (!response.ok) throw new Error('Exolix API error');
-
-        const data = await response.json();
-
-        return {
-            exchange: 'Exolix',
-            estimatedAmount: parseFloat(data.toAmount),
-            rate: parseFloat(data.rate),
-            url: `https://exolix.com/?ref=${AFFILIATE_IDS.exolix}`
-        };
-    } catch (error) {
-        console.error('Exolix error:', error);
-        return null;
-    }
-}
-
-// ============================================================================
-// API GODEX
-// ============================================================================
-
-async function getGodexRate(from, to, amount) {
-    try {
-        // API Godex (POST request)
-        const response = await fetch('https://api.godex.io/api/v1/info', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                from: from.toUpperCase(),
-                to: to.toUpperCase(),
-                amount: amount.toString()
-            })
-        });
-
-        if (!response.ok) throw new Error('Godex API error');
-
-        const data = await response.json();
-
-        return {
-            exchange: 'Godex',
-            estimatedAmount: parseFloat(data.amount),
-            rate: parseFloat(data.rate),
-            url: `https://godex.io/?aff_id=${AFFILIATE_IDS.godex}&utm_source=affiliate&utm_medium=le_bon_xmr&utm_campaign=${AFFILIATE_IDS.godex}`
-        };
-    } catch (error) {
-        console.error('Godex error:', error);
-        return null;
-    }
-}
-
-// ============================================================================
-// API LETSEXCHANGE
-// ============================================================================
-
-async function getLetsExchangeRate(from, to, amount) {
-    try {
-        // 🔑 API Key LetsExchange configurée ✅
-        const response = await fetch('https://api.letsexchange.io/api/v1/info', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0b2tlbiIsImRhdGEiOnsiaWQiOjE0NjcsImhhc2giOiJleUpwZGlJNkluVjBkemsxWEM4M1VqZG9aRzVzYlVKb1NGUkZUa3RuUFQwaUxDSjJZV3gxWlNJNklsSlFObHd2UkVWSlpXMW5hM1Z1WW5KallXWkNZMlJ2V1hCSFNqZDNSa2xqTmxNNU5WaHVUVVFyTUU5SmJWa3dVbEpVVVVWSFVFVktTbTVLWTJWQlNscG1jRk5PWTNKS2EzcE1lVTFEUTBaUGEyOHlSVGxYTmxkU1dtNHpVaXRXTTBjME1IVk1VVmt6Y1ZVd1p6MGlMQ0p0WVdNaU9pSXhNV1k1TVdFeE0yRmxZV0prWXpVeE1XVmpaR0poTVdZd09XVmxZV1kxTnpJMlpUTXhPR1ptTnpoak56a3hOMlF6WXpnMU1qTTRPR0l5TVdRNFlXSTFJbjA9In0sImlzcyI6Imh0dHBzOlwvXC9hcGkubGV0c2V4Y2hhbmdlLmlvXC9hcGlcL3YxXC9hcGkta2V5IiwiaWF0IjoxNzY3MTgzOTAzLCJleHAiOjIwODg1OTE5MDMsIm5iZiI6MTc2NzE4MzkwMywianRpIjoia01OaUlSRkNxcGY2M29TdyJ9.zyJlour8j8m5xPlgVCKGo41L1xRORoHvDi8Ys-T34SI'
-            },
-            body: JSON.stringify({
-                from: from.toUpperCase(),
-                to: to.toUpperCase(),
-                amount: amount.toString(),
-                affiliate_id: AFFILIATE_IDS.letsexchange
-            })
-        });
-
-        if (!response.ok) throw new Error('LetsExchange API error');
-
-        const data = await response.json();
-
-        return {
-            exchange: 'LetsExchange',
-            estimatedAmount: parseFloat(data.amount),
-            rate: parseFloat(data.rate),
-            url: `https://letsexchange.io/?ref_id=${AFFILIATE_IDS.letsexchange}`
-        };
-    } catch (error) {
-        console.error('LetsExchange error:', error);
-        return null;
-    }
-}
-
-// ============================================================================
-// API SIMPLESWAP (Alternative)
-// ============================================================================
-
-async function getSimpleSwapRate(from, to, amount) {
-    try {
-        // 🔑 REQUIS : Ajoute ta clé API SimpleSwap après api_key=
-        // 1. Crée un compte sur simpleswap.io
-        // 2. Envoie un email à support@simpleswap.io pour demander une clé API
-        // 3. Attends 24-48h leur réponse
-        // 4. Remplace l'espace vide après api_key= par ta clé
-        const response = await fetch(
-            `https://api.simpleswap.io/get_estimated?api_key=&fixed=false&currency_from=${from}&currency_to=${to}&amount=${amount}`
-        );
-
-        if (!response.ok) throw new Error('SimpleSwap API error');
-
-        const data = await response.json();
-
-        return {
-            exchange: 'SimpleSwap',
-            estimatedAmount: parseFloat(data),
-            rate: parseFloat(data) / amount,
-            url: `https://simpleswap.io/?ref=`
-        };
-    } catch (error) {
-        console.error('SimpleSwap error:', error);
-        return null;
-    }
-}
+// Fonctions API supprimées - Tout est maintenant géré par la Netlify Function
+// pour sécuriser les clés API côté serveur
 
 // ============================================================================
 // RÉCUPÉRER TOUS LES TAUX (via Netlify Function pour éviter CORS)
 // ============================================================================
 
 async function getAllRates(from, to, amount) {
-    // Appels directs (pas de CORS)
-    const changeNowPromise = getChangeNowRate(from, to, amount);
-    const exolixPromise = getExolixRate(from, to, amount);
-    const godexPromise = getGodexRate(from, to, amount);
-    const letsexchangePromise = getLetsExchangeRate(from, to, amount);
+    // 🔒 SÉCURISÉ : Utilise la fonction Netlify pour cacher les clés API
+    try {
+        const response = await fetch(`/.netlify/functions/get-rates?from=${from}&to=${to}&amount=${amount}`);
 
-    // Appel à la Netlify Function pour StealthEX (contourne CORS)
-    const netlifyFunctionPromise = fetch(`/.netlify/functions/get-rates?from=${from}&to=${to}&amount=${amount}`)
-        .then(async res => {
-            if (!res.ok) return [];
-            const data = await res.json();
-            return data.rates || [];
-        })
-        .catch(() => []);
-
-    const [changeNowResult, exolixResult, godexResult, letsexchangeResult, netlifyResults] = await Promise.all([
-        changeNowPromise.catch(() => null),
-        exolixPromise.catch(() => null),
-        godexPromise.catch(() => null),
-        letsexchangePromise.catch(() => null),
-        netlifyFunctionPromise
-    ]);
-
-    // Combiner les résultats
-    const rates = [];
-
-    if (changeNowResult) {
-        rates.push(changeNowResult);
-    }
-
-    if (exolixResult) {
-        rates.push(exolixResult);
-    }
-
-    if (godexResult) {
-        rates.push(godexResult);
-    }
-
-    if (letsexchangeResult) {
-        rates.push(letsexchangeResult);
-    }
-
-    // Ajouter les exchanges de la Netlify Function (StealthEX)
-    netlifyResults.forEach(rate => {
-        // Éviter les doublons
-        if (rate.exchange !== 'ChangeNow' && rate.exchange !== 'Exolix' && rate.exchange !== 'Godex' && rate.exchange !== 'LetsExchange') {
-            rates.push(rate);
+        if (!response.ok) {
+            throw new Error('Netlify function error');
         }
-    });
 
-    rates.sort((a, b) => b.estimatedAmount - a.estimatedAmount);
-
-    return rates;
+        const data = await response.json();
+        return data.rates || [];
+    } catch (error) {
+        console.error('Error fetching rates:', error);
+        return [];
+    }
 }
 
 // ============================================================================
