@@ -1,8 +1,13 @@
 // Script de collecte automatique des taux BTC → XMR
 // Exécuté toutes les heures par GitHub Actions
 
-const fs = require('fs');
-const path = require('path');
+import fetch from 'node-fetch';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Configuration
 const AMOUNT = 1; // Montant de référence : 1 BTC (pour correspondre au comparateur)

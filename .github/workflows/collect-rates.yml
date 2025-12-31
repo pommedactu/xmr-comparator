@@ -19,6 +19,9 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Install dependencies
+        run: npm install
+
       - name: Collect rates
         run: node scripts/collect-rates.js
 

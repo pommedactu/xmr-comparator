@@ -1,0 +1,12 @@
+{
+  "name": "xmr-comparator",
+  "version": "1.0.0",
+  "description": "Comparateur français de taux Monero (XMR)",
+  "type": "module",
+  "scripts": {
+    "collect": "node scripts/collect-rates.js"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
+}
