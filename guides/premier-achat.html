@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achète tes premiers XMR - Guide pas à pas | Le Bon XMR</title>
+    <meta name="description" content="Guide pas à pas pour acheter vos premiers Monero (XMR) en toute sécurité, même sans aucune connaissance technique.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="alternate icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        /* Navigation */
+        nav {
+            padding: 20px 0;
+            border-bottom: 1px solid #2a2a2a;
+            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 10, 0.8);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FF6600, #FF9933);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #999;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .nav-links a:hover {
+            color: #FF6600;
+        }
+
+        .nav-links a.active {
+            color: #FF6600;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #FF6600, #FF9933);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #999;
+            font-size: 16px;
+        }
+
+        /* Progress bar */
+        .progress-container {
+            background: #1a1a1a;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid #333;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #333;
+            z-index: 0;
+        }
+
+        .progress-line-active {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #FF6600, #FF9933);
+            z-index: 1;
+            transition: width 0.5s ease;
+        }
+
+        .step-indicator {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2a2a2a;
+            border: 3px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+
+        .step-indicator.active .step-circle {
+            background: linear-gradient(135deg, #FF6600, #FF9933);
+            border-color: #FF6600;
+            transform: scale(1.1);
+        }
+
+        .step-indicator.completed .step-circle {
+            background: #00C853;
+            border-color: #00C853;
+        }
+
+        .step-indicator.completed .step-circle::before {
+            content: "✓";
+            color: white;
+        }
+
+        .step-label {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+
+        .step-indicator.active .step-label {
+            color: #FF6600;
+            font-weight: 600;
+        }
+
+        /* Step content */
+        .step-content {
+            background: #1a1a1a;
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid #333;
+            min-height: 400px;
+            display: none;
+        }
+
+        .step-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-title {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #FF6600;
+        }
+
+        .step-description {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+
+        .step-visual {
+            background: #2a2a2a;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .mock-phone {
+            width: 200px;
+            height: 400px;
+            background: #000;
+            border-radius: 30px;
+            margin: 0 auto;
+            border: 8px solid #333;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .mock-phone::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 6px;
+            background: #222;
+            border-radius: 3px;
+        }
+
+        .app-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #00C853, #00E676);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .app-name {
+            font-size: 14px;
+            color: #fff;
+        }
+
+        .wallet-address {
+            background: #2a2a2a;
+            border: 2px dashed #FF6600;
+            border-radius: 12px;
+            padding: 20px;
+            font-family: monospace;
+            font-size: 14px;
+            color: #FF6600;
+            word-break: break-all;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #FF6600, #FF9933);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 102, 0, 0.3);
+        }
+
+        .comparison-preview {
+            background: #2a2a2a;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .exchange-item {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .exchange-item:first-child {
+            border: 2px solid #00C853;
+        }
+
+        .exchange-name {
+            font-weight: 600;
+        }
+
+        .exchange-rate {
+            color: #00C853;
+            font-weight: 700;
+        }
+
+        .best-badge {
+            background: #00C853;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        /* Checklist */
+        .checklist {
+            background: #2a2a2a;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: start;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: #1a1a1a;
+            border-radius: 8px;
+        }
+
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #FF6600;
+            border-radius: 6px;
+            margin-right: 15px;
+            flex-shrink: 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .checkbox.checked {
+            background: #00C853;
+            border-color: #00C853;
+        }
+
+        .checkbox.checked::after {
+            content: "✓";
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Warning box */
+        .warning-box {
+            background: rgba(255, 152, 0, 0.1);
+            border: 2px solid #FF9800;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box strong {
+            color: #FF9800;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        /* Success box */
+        .success-box {
+            background: rgba(0, 200, 83, 0.1);
+            border: 2px solid #00C853;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .success-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .success-box h3 {
+            color: #00C853;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6600, #FF9933);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 102, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: #2a2a2a;
+            color: #fff;
+            border: 1px solid #444;
+        }
+
+        .btn-secondary:hover {
+            background: #333;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Download links */
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .download-card {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .download-card:hover {
+            border-color: #FF6600;
+            transform: translateY(-5px);
+        }
+
+        .download-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .download-card h4 {
+            margin-bottom: 5px;
+        }
+
+        .download-card p {
+            font-size: 12px;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .progress-steps {
+                flex-wrap: wrap;
+            }
+
+            .step-label {
+                font-size: 10px;
+            }
+
+            .download-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">
+                <span>🔍</span>
+                <span>Le Bon XMR</span>
+            </a>
+            <div class="nav-links">
+                <a href="../index.html">Comparateur</a>
+                <a href="index.html">Guides</a>
+                <a href="#" class="active">Premier achat</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Achète tes premiers XMR</h1>
+            <p>Guide pas à pas - 5 minutes chrono</p>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="progress-container">
+            <div class="progress-steps">
+                <div class="progress-line"></div>
+                <div class="progress-line-active" id="progressLine" style="width: 0%"></div>
+
+                <div class="step-indicator active" data-step="1">
+                    <div class="step-circle">1</div>
+                    <div class="step-label">Wallet</div>
+                </div>
+                <div class="step-indicator" data-step="2">
+                    <div class="step-circle">2</div>
+                    <div class="step-label">Adresse</div>
+                </div>
+                <div class="step-indicator" data-step="3">
+                    <div class="step-circle">3</div>
+                    <div class="step-label">Compare</div>
+                </div>
+                <div class="step-indicator" data-step="4">
+                    <div class="step-circle">4</div>
+                    <div class="step-label">Achète</div>
+                </div>
+                <div class="step-indicator" data-step="5">
+                    <div class="step-circle">5</div>
+                    <div class="step-label">Reçois</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 1: Install Wallet -->
+        <div class="step-content active" data-step="1">
+            <div class="step-title">📱 Étape 1 : Installe Cake Wallet</div>
+            <div class="step-description">
+                Cake Wallet est le wallet Monero le plus simple pour débutants. Gratuit, sécurisé et en français.
+            </div>
+
+            <div class="step-visual">
+                <div class="mock-phone">
+                    <div class="app-icon">🍰</div>
+                    <div class="app-name">Cake Wallet</div>
+                </div>
+            </div>
+
+            <div class="download-grid">
+                <div class="download-card" onclick="alert('Redirection vers App Store')">
+                    <div class="download-icon">🍎</div>
+                    <h4>iPhone / iPad</h4>
+                    <p>Télécharge sur l'App Store</p>
+                </div>
+                <div class="download-card" onclick="alert('Redirection vers Google Play')">
+                    <div class="download-icon">🤖</div>
+                    <h4>Android</h4>
+                    <p>Télécharge sur Google Play</p>
+                </div>
+            </div>
+
+            <div class="checklist">
+                <div class="checklist-item">
+                    <div class="checkbox" onclick="toggleCheck(this)"></div>
+                    <div>
+                        <strong>Télécharge l'app</strong><br>
+                        <span style="color: #999; font-size: 14px;">Choisis iOS ou Android selon ton téléphone</span>
+                    </div>
+                </div>
+                <div class="checklist-item">
+                    <div class="checkbox" onclick="toggleCheck(this)"></div>
+                    <div>
+                        <strong>Crée un nouveau wallet</strong><br>
+                        <span style="color: #999; font-size: 14px;">Choisis "Monero" puis "Créer un nouveau wallet"</span>
+                    </div>
+                </div>
+                <div class="checklist-item">
+                    <div class="checkbox" onclick="toggleCheck(this)"></div>
+                    <div>
+                        <strong>Sauvegarde tes 25 mots</strong><br>
+                        <span style="color: #999; font-size: 14px;">Note-les sur papier. C'est la clé pour récupérer ton argent !</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ IMPORTANT :</strong>
+                Les 25 mots sont LA CLÉ pour accéder à ton argent. Si tu les perds, tu perds tout. Ne les partage JAMAIS avec personne.
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" disabled>← Précédent</button>
+                <button class="btn btn-primary" onclick="nextStep()">Suivant →</button>
+            </div>
+        </div>
+
+        <!-- Step 2: Get Address -->
+        <div class="step-content" data-step="2">
+            <div class="step-title">📋 Étape 2 : Copie ton adresse XMR</div>
+            <div class="step-description">
+                Ton adresse XMR, c'est comme ton IBAN bancaire. C'est ici que tu vas recevoir tes Monero.
+            </div>
+
+            <div class="step-visual">
+                <p style="margin-bottom: 20px; color: #999;">Dans Cake Wallet :</p>
+                <ol style="text-align: left; max-width: 400px; margin: 0 auto; line-height: 2;">
+                    <li>Ouvre l'app Cake Wallet</li>
+                    <li>Appuie sur "Recevoir" en bas</li>
+                    <li>Tu verras ton adresse XMR</li>
+                    <li>Appuie sur "Copier"</li>
+                </ol>
+            </div>
+
+            <div class="wallet-address">
+                43Xm7K9wR2...ABC123 (Exemple)
+            </div>
+
+            <div class="checklist">
+                <div class="checklist-item">
+                    <div class="checkbox" onclick="toggleCheck(this)"></div>
+                    <div>
+                        <strong>Ouvre Cake Wallet</strong><br>
+                        <span style="color: #999; font-size: 14px;">Lance l'app que tu viens d'installer</span>
+                    </div>
+                </div>
+                <div class="checklist-item">
+                    <div class="checkbox" onclick="toggleCheck(this)"></div>
+                    <div>
+                        <strong>Clique sur "Recevoir"</strong><br>
+                        <span style="color: #999; font-size: 14px;">Bouton en bas de l'écran</span>
+                    </div>
+                </div>
+                <div class="checklist-item">
+                    <div class="checkbox" onclick="toggleCheck(this)"></div>
+                    <div>
+                        <strong>Copie ton adresse</strong><br>
+                        <span style="color: #999; font-size: 14px;">Appuie sur "Copier l'adresse"</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="prevStep()">← Précédent</button>
+                <button class="btn btn-primary" onclick="nextStep()">J'ai copié mon adresse →</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Compare -->
+        <div class="step-content" data-step="3">
+            <div class="step-title">🔍 Étape 3 : Compare les taux</div>
+            <div class="step-description">
+                Les taux changent en permanence. Compare pour économiser jusqu'à 5% sur ton achat !
+            </div>
+
+            <div class="comparison-preview">
+                <div class="exchange-item">
+                    <div>
+                        <span class="exchange-name">Exolix</span>
+                        <span class="best-badge">✓ Meilleur</span>
+                    </div>
+                    <div class="exchange-rate">196.79 XMR</div>
+                </div>
+                <div class="exchange-item">
+                    <div class="exchange-name">ChangeNow</div>
+                    <div class="exchange-rate" style="color: #FF6600;">195.38 XMR</div>
+                </div>
+                <div class="exchange-item">
+                    <div class="exchange-name">StealthEX</div>
+                    <div class="exchange-rate" style="color: #999;">194.20 XMR</div>
+                </div>
+            </div>
+
+            <div style="background: rgba(0, 200, 83, 0.1); border-radius: 12px; padding: 20px; margin: 20px 0;">
+                <strong style="color: #00C853;">💰 Tu économises 1.59 XMR en choisissant le meilleur !</strong><br>
+                <span style="color: #999; font-size: 14px;">Soit environ 3.5€ d'économie pour 1 BTC échangé</span>
+            </div>
+
+            <div class="checklist">
+                <div class="checklist-item">
+                    <div class="checkbox" onclick="toggleCheck(this)"></div>
+                    <div>
+                        <strong>Entre le montant que tu veux acheter</strong><br>
+                        <span style="color: #999; font-size: 14px;">Par exemple : 0.01 BTC ou 50€</span>
+                    </div>
+                </div>
+                <div class="checklist-item">
+                    <div class="checkbox" onclick="toggleCheck(this)"></div>
+                    <div>
+                        <strong>Clique sur "Comparer les taux"</strong><br>
+                        <span style="color: #999; font-size: 14px;">Le site te montrera les 5 meilleurs exchanges</span>
+                    </div>
+                </div>
+                <div class="checklist-item">
+                    <div class="checkbox" onclick="toggleCheck(this)"></div>
+                    <div>
+                        <strong>Repère celui avec le badge vert "Meilleur taux"</strong><br>
+                        <span style="color: #999; font-size: 14px;">C'est celui qui te donnera le plus de XMR</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="prevStep()">← Précédent</button>
+                <button class="btn btn-primary" onclick="nextStep()">Suivant →</button>
+            </div>
+        </div>
+
+        <!-- Step 4: Buy -->
+        <div class="step-content" data-step="4">
+            <div class="step-title">💳 Étape 4 : Achète sur l'exchange</div>
+            <div class="step-description">
+                Clique sur "Échanger" sur l'exchange choisi. Tu vas être redirigé vers leur site.
+            </div>
+
+            <div style="background: #2a2a2a; border-radius: 12px; padding: 30px; margin: 20px 0;">
+                <h3 style="margin-bottom: 20px; color: #FF6600;">Sur le site de l'exchange :</h3>
+                <ol style="line-height: 2.5; font-size: 16px;">
+                    <li><strong>Entre le montant</strong> que tu veux échanger</li>
+                    <li><strong>Colle ton adresse XMR</strong> (celle que tu as copiée à l'étape 2)</li>
+                    <li><strong>Vérifie les détails</strong> de la transaction</li>
+                    <li><strong>Envoie ta crypto</strong> (BTC, ETH, etc.) vers l'adresse indiquée</li>
+                </ol>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Vérifie TOUJOURS l'adresse :</strong>
+                Avant d'envoyer, vérifie que l'adresse XMR affichée sur l'exchange correspond bien à celle de ton Cake Wallet. Les virus peuvent remplacer les adresses !
+            </div>
+
+            <div style="background: #2a2a2a; border-radius: 12px; padding: 20px; margin: 20px 0;">
+                <h4 style="margin-bottom: 15px;">⏱️ Temps d'attente estimé :</h4>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; text-align: center;">
+                    <div>
+                        <div style="font-size: 32px; color: #00C853;">5-10</div>
+                        <div style="color: #999; font-size: 14px;">minutes</div>
+                        <div style="color: #666; font-size: 12px;">ChangeNow</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 32px; color: #00C853;">5-15</div>
+                        <div style="color: #999; font-size: 14px;">minutes</div>
+                        <div style="color: #666; font-size: 12px;">Exolix</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 32px; color: #00C853;">10-20</div>
+                        <div style="color: #999; font-size: 14px;">minutes</div>
+                        <div style="color: #666; font-size: 12px;">Godex</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="prevStep()">← Précédent</button>
+                <button class="btn btn-primary" onclick="nextStep()">J'ai envoyé la crypto →</button>
+            </div>
+        </div>
+
+        <!-- Step 5: Receive -->
+        <div class="step-content" data-step="5">
+            <div class="success-box">
+                <div class="success-icon">🎉</div>
+                <h3>Félicitations !</h3>
+                <p style="color: #999; margin-top: 10px;">
+                    Tu vas recevoir tes premiers XMR dans 5-20 minutes.
+                </p>
+            </div>
+
+            <div style="background: #2a2a2a; border-radius: 12px; padding: 30px; margin: 30px 0;">
+                <h3 style="margin-bottom: 20px; color: #FF6600;">Que faire maintenant ?</h3>
+
+                <div style="margin-bottom: 25px;">
+                    <strong style="color: #00C853;">✓ Ouvre Cake Wallet</strong><br>
+                    <p style="color: #999; margin-top: 8px; font-size: 14px;">
+                        Tu verras tes XMR apparaître dans ton solde. La première confirmation prend ~2 minutes,
+                        les suivantes ~20 secondes chacune.
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <strong style="color: #00C853;">✓ Attends 10 confirmations</strong><br>
+                    <p style="color: #999; margin-top: 8px; font-size: 14px;">
+                        Ton solde sera "verrouillé" pendant ~20 minutes (10 confirmations). C'est normal,
+                        c'est la sécurité du réseau Monero.
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <strong style="color: #00C853;">✓ Tes XMR sont à toi !</strong><br>
+                    <p style="color: #999; margin-top: 8px; font-size: 14px;">
+                        Une fois déverrouillés, tu peux les envoyer, les garder, ou les échanger.
+                        Tant que tu as tes 25 mots de sauvegarde, personne ne peut te les voler.
+                    </p>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>🔐 Rappel sécurité :</strong>
+                Ne partage JAMAIS tes 25 mots avec personne. Pas même le "support Cake Wallet" (qui ne te les demandera jamais).
+                Ces mots = ton argent.
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <h3 style="margin-bottom: 15px;">Prêt pour un prochain achat ?</h3>
+                <p style="color: #999; margin-bottom: 25px;">
+                    Reviens sur Le Bon XMR pour comparer les taux à chaque fois !
+                </p>
+                <button class="btn btn-primary" style="max-width: 300px;" onclick="window.location.href='index.html'">
+                    Retour au comparateur →
+                </button>
+            </div>
+
+            <div class="button-group" style="margin-top: 40px;">
+                <button class="btn btn-secondary" onclick="prevStep()">← Précédent</button>
+                <button class="btn btn-primary" onclick="restartWizard()">🔄 Recommencer</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 5;
+
+        function updateProgress() {
+            // Update progress bar
+            const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            document.getElementById('progressLine').style.width = progress + '%';
+
+            // Update step indicators
+            document.querySelectorAll('.step-indicator').forEach((indicator, index) => {
+                const stepNum = index + 1;
+                indicator.classList.remove('active', 'completed');
+
+                if (stepNum < currentStep) {
+                    indicator.classList.add('completed');
+                } else if (stepNum === currentStep) {
+                    indicator.classList.add('active');
+                }
+            });
+
+            // Update content
+            document.querySelectorAll('.step-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelector(`.step-content[data-step="${currentStep}"]`).classList.add('active');
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateProgress();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateProgress();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function restartWizard() {
+            currentStep = 1;
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Reset all checkboxes
+            document.querySelectorAll('.checkbox').forEach(cb => {
+                cb.classList.remove('checked');
+            });
+        }
+
+        function toggleCheck(element) {
+            element.classList.toggle('checked');
+        }
+
+        // Initialize
+        updateProgress();
+    </script>
+</body>
+</html>
