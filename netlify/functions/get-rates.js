@@ -31,9 +31,7 @@ exports.handler = async (event, context) => {
         const CHANGENOW_AFFILIATE = '3b25776136a4ef';
         const STEALTHEX_KEY = 'b66e38ef-2b8e-4df3-bc2a-13bd1c44c105';
         const STEALTHEX_AFFILIATE = 'IzL7syI1vy';
-        const FIXEDFLOAT_KEY = 'Ea6S4jgDCCqYbYQBzNk85n1fmUSCr07TmGDqG724';
-        const FIXEDFLOAT_SECRET = 'O1WuskAK9bYAwmXbpTz4cMb69FvSQZkogUJo7JKT';
-        const FIXEDFLOAT_AFFILIATE = 'fixedfloat-ref'; // À personnaliser si tu as un code d'affiliation
+        // FixedFloat removed - requires user data storage (IP, user-agent) for 1 year
 
         const results = await Promise.allSettled([
             // ChangeNow
@@ -49,49 +47,6 @@ exports.handler = async (event, context) => {
                     };
                 })
                 .catch(() => null),
-
-            // FixedFloat
-            (async () => {
-                try {
-                    const bodyData = {
-                        fromCcy: from.toUpperCase(),
-                        toCcy: to.toUpperCase(),
-                        direction: 'from',
-                        type: 'float',
-                        amount: amount.toString()
-                    };
-                    const bodyString = JSON.stringify(bodyData);
-
-                    // Calculer la signature HMAC-SHA256
-                    const signature = crypto
-                        .createHmac('sha256', FIXEDFLOAT_SECRET)
-                        .update(bodyString)
-                        .digest('hex');
-
-                    const res = await fetch('https://fixedfloat.com/api/v2/price', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-API-KEY': FIXEDFLOAT_KEY,
-                            'X-API-SIGN': signature
-                        },
-                        body: bodyString
-                    });
-
-                    if (!res.ok) return null;
-                    const data = await res.json();
-                    if (data.code !== 0) return null;
-
-                    return {
-                        exchange: 'FixedFloat',
-                        estimatedAmount: parseFloat(data.data.to.amount),
-                        rate: parseFloat(data.data.to.amount) / parseFloat(amount),
-                        url: `https://fixedfloat.com/?ref=${FIXEDFLOAT_AFFILIATE}`
-                    };
-                } catch (error) {
-                    return null;
-                }
-            })(),
 
             // StealthEX
             fetch(`https://api.stealthex.io/api/v2/estimate/${from}/${to}?amount=${amount}&api_key=${STEALTHEX_KEY}&fixed=false`)

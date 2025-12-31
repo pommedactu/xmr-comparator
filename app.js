@@ -43,51 +43,7 @@ async function getChangeNowRate(from, to, amount) {
     }
 }
 
-// ============================================================================
-// API FIXEDFLOAT
-// ============================================================================
-
-async function getFixedFloatRate(from, to, amount) {
-    try {
-        // 🔑 REQUIS : Ajoute ta clé API FixedFloat ici
-        // 1. Crée un compte sur fixedfloat.com
-        // 2. Va dans Settings → API
-        // 3. Génère une clé gratuite
-        // 4. Décommente la ligne ci-dessous et remplace YOUR_KEY :
-        // 'X-API-KEY': 'YOUR_FIXEDFLOAT_KEY'
-
-        const response = await fetch('https://fixedfloat.com/api/v2/price', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-                // 'X-API-KEY': 'YOUR_FIXEDFLOAT_KEY'  // ← Décommente cette ligne !
-            },
-            body: JSON.stringify({
-                fromCcy: from.toUpperCase(),
-                toCcy: to.toUpperCase(),
-                direction: 'from',
-                type: 'float',
-                amount: amount.toString()
-            })
-        });
-
-        if (!response.ok) throw new Error('FixedFloat API error');
-
-        const data = await response.json();
-
-        if (data.code !== 0) throw new Error(data.msg);
-
-        return {
-            exchange: 'FixedFloat',
-            estimatedAmount: parseFloat(data.data.to.amount),
-            rate: parseFloat(data.data.to.amount) / amount,
-            url: `https://fixedfloat.com/?ref=${AFFILIATE_IDS.fixedfloat}`
-        };
-    } catch (error) {
-        console.error('FixedFloat error:', error);
-        return null;
-    }
-}
+// FixedFloat removed - requires user data storage (IP, user-agent) for 1 year
 
 // ============================================================================
 // API STEALTHEX
@@ -423,7 +379,6 @@ async function displayResults(rates, fromCurrency, toCurrency) {
 function getExchangeLogo(exchangeName) {
     const logos = {
         'ChangeNow': 'CN',
-        'FixedFloat': 'FF',
         'StealthEX': 'SX',
         'Exolix': 'EX',
         'Godex': 'GD',
@@ -437,7 +392,6 @@ function getExchangeLogo(exchangeName) {
 function getExchangeETA(exchangeName) {
     const etas = {
         'ChangeNow': '5-15 min',
-        'FixedFloat': '10-30 min',
         'StealthEX': '5-20 min',
         'Exolix': '5-15 min',
         'Godex': '10-30 min',
