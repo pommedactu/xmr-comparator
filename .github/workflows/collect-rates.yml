@@ -8,7 +8,6 @@ name: Collect Exchange Rates
   jobs:
     collect:
       runs-on: ubuntu-latest
-
       steps:
         - name: Checkout repository
           uses: actions/checkout@v4
