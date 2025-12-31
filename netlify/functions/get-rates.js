@@ -31,6 +31,11 @@ exports.handler = async (event, context) => {
         const CHANGENOW_AFFILIATE = '3b25776136a4ef';
         const STEALTHEX_KEY = 'b66e38ef-2b8e-4df3-bc2a-13bd1c44c105';
         const STEALTHEX_AFFILIATE = 'IzL7syI1vy';
+        const EXOLIX_BEARER = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxlYm9ueG1yQGdtYWlsLmNvbSIsInN1YiI6NDc1NDMsImlhdCI6MTc2NzE4MTIxNSwiZXhwIjoxOTI0OTY5MjE1fQ.LMvovfoZmca3yAgZ_8iBV9KD9AXqt-2WQhpPHf_ss24';
+        const EXOLIX_AFFILIATE = '4C9EF425CD02A5386531CC4C199F64DC';
+        const GODEX_AFFILIATE = 'Kf4tZwtpYEOliAB2';
+        const LETSEXCHANGE_BEARER = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0b2tlbiIsImRhdGEiOnsiaWQiOjE0NjcsImhhc2giOiJleUpwZGlJNkluVjBkemsxWEM4M1VqZG9aRzVzYlVKb1NGUkZUa3RuUFQwaUxDSjJZV3gxWlNJNklsSlFObHd2UkVWSlpXMW5hM1Z1WW5KallXWkNZMlJ2V1hCSFNqZDNSa2xqTmxNNU5WaHVUVVFyTUU5SmJWa3dVbEpVVVVWSFVFVktTbTVLWTJWQlNscG1jRk5PWTNKS2EzcE1lVTFEUTBaUGEyOHlSVGxYTmxkU1dtNHpVaXRXTTBjME1IVk1VVmt6Y1ZVd1p6MGlMQ0p0WVdNaU9pSXhNV1k1TVdFeE0yRmxZV0prWXpVeE1XVmpaR0poTVdZd09XVmxZV1kxTnpJMlpUTXhPR1ptTnpoak56a3hOMlF6WXpnMU1qTTRPR0l5TVdRNFlXSTFJbjA9In0sImlzcyI6Imh0dHBzOlwvXC9hcGkubGV0c2V4Y2hhbmdlLmlvXC9hcGlcL3YxXC9hcGkta2V5IiwiaWF0IjoxNzY3MTgzOTAzLCJleHAiOjIwODg1OTE5MDMsIm5iZiI6MTc2NzE4MzkwMywianRpIjoia01OaUlSRkNxcGY2M29TdyJ9.zyJlour8j8m5xPlgVCKGo41L1xRORoHvDi8Ys-T34SI';
+        const LETSEXCHANGE_AFFILIATE = 'uNYqUmSs0u2CXccL';
         // FixedFloat removed - requires user data storage (IP, user-agent) for 1 year
 
         const results = await Promise.allSettled([
@@ -58,6 +63,66 @@ exports.handler = async (event, context) => {
                         estimatedAmount: parseFloat(data.estimated_amount),
                         rate: parseFloat(data.estimated_amount) / parseFloat(amount),
                         url: `https://stealthex.io/?ref=${STEALTHEX_AFFILIATE}`
+                    };
+                })
+                .catch(() => null),
+
+            // Exolix
+            fetch(`https://exolix.com/api/v2/rate?coinFrom=${from.toUpperCase()}&coinTo=${to.toUpperCase()}&amount=${amount}&rateType=float`, {
+                headers: { 'Authorization': EXOLIX_BEARER }
+            })
+                .then(async res => {
+                    if (!res.ok) return null;
+                    const data = await res.json();
+                    return {
+                        exchange: 'Exolix',
+                        estimatedAmount: parseFloat(data.toAmount),
+                        rate: parseFloat(data.rate),
+                        url: `https://exolix.com/?ref=${EXOLIX_AFFILIATE}`
+                    };
+                })
+                .catch(() => null),
+
+            // Godex
+            fetch('https://api.godex.io/api/v1/info', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify({ from: from.toUpperCase(), to: to.toUpperCase(), amount: amount.toString() })
+            })
+                .then(async res => {
+                    if (!res.ok) return null;
+                    const data = await res.json();
+                    return {
+                        exchange: 'Godex',
+                        estimatedAmount: parseFloat(data.amount),
+                        rate: parseFloat(data.rate),
+                        url: `https://godex.io/?aff_id=${GODEX_AFFILIATE}&utm_source=affiliate&utm_medium=le_bon_xmr&utm_campaign=${GODEX_AFFILIATE}`
+                    };
+                })
+                .catch(() => null),
+
+            // LetsExchange
+            fetch('https://api.letsexchange.io/api/v1/info', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': LETSEXCHANGE_BEARER
+                },
+                body: JSON.stringify({
+                    from: from.toUpperCase(),
+                    to: to.toUpperCase(),
+                    amount: amount.toString(),
+                    affiliate_id: LETSEXCHANGE_AFFILIATE
+                })
+            })
+                .then(async res => {
+                    if (!res.ok) return null;
+                    const data = await res.json();
+                    return {
+                        exchange: 'LetsExchange',
+                        estimatedAmount: parseFloat(data.amount),
+                        rate: parseFloat(data.rate),
+                        url: `https://letsexchange.io/?ref_id=${LETSEXCHANGE_AFFILIATE}`
                     };
                 })
                 .catch(() => null)
