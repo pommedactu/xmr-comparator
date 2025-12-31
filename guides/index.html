@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guides Monero (XMR) en français - Le Bon XMR</title>
+    <meta name="description" content="Tous les guides pour comprendre et utiliser Monero (XMR) : achat, comparaison BTC vs XMR, débuter, meilleurs exchanges. Guides français complets et gratuits.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #FF6600;
+            --primary-dark: #CC5200;
+            --primary-light: #FF9933;
+            --secondary: #4D4D4D;
+            --bg-dark: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --bg-card-hover: #222222;
+            --text: #ffffff;
+            --text-muted: #999999;
+            --success: #00C853;
+            --border: #2a2a2a;
+            --shadow: rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Gradient Background */
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(255, 102, 0, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 153, 51, 0.06) 0%, transparent 50%);
+        }
+
+        .nav {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 10, 0.8);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo,
+        .nav-logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-top: 60px;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .guides-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .guide-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            padding: 35px;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: var(--text);
+            display: block;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .guide-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-8px);
+            background: var(--bg-card-hover);
+            box-shadow: 0 10px 40px rgba(255, 102, 0, 0.2);
+        }
+
+        .guide-emoji {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .guide-card h2 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        .guide-card p {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .guide-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .guide-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 50px 40px;
+            border-radius: 24px;
+            text-align: center;
+            margin: 50px 0;
+            box-shadow: 0 20px 60px rgba(255, 102, 0, 0.3);
+        }
+
+        .cta-box h3 {
+            margin: 0 0 15px 0;
+            color: white;
+            font-size: 28px;
+        }
+
+        .cta-box p {
+            margin-bottom: 25px;
+            opacity: 0.9;
+            font-size: 16px;
+        }
+
+        .cta-btn {
+            background: white;
+            color: var(--primary);
+            padding: 16px 40px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-block;
+            transition: all 0.3s;
+            font-size: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .info-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .info-section h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .info-section p {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px 0;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        @media screen and (max-width: 900px) {
+            .nav {
+                padding: 15px 0;
+            }
+
+            .nav-container {
+                padding: 0 15px;
+            }
+
+            .nav-logo,
+            .logo {
+                font-size: 20px;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            .nav-link {
+                font-size: 14px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            .guides-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .guide-card {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-bg"></div>
+
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">
+                <span>🔍</span>
+                <span>Le Bon XMR</span>
+            </a>
+            <div class="nav-links">
+                <a href="../index.html" class="nav-link">Comparateur</a>
+                <a href="index.html" class="nav-link">Guides</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <h1>📚 Guides Monero (XMR)</h1>
+            <p class="subtitle">
+                Tout ce que tu dois savoir sur Monero : achat, utilisation, comparaison.<br>
+                Guides français complets, gratuits, et sans blabla.
+            </p>
+        </div>
+
+        <div class="guides-grid">
+            <!-- Guide 1 -->
+            <a href="acheter-monero-france.html" class="guide-card">
+                <div class="guide-emoji">🇫🇷</div>
+                <h2>Comment acheter du Monero (XMR) en France en 2025 ?</h2>
+                <p>
+                    Guide complet pour acheter du Monero en France : les 3 méthodes (avec et sans KYC), tutoriel pas à pas, frais détaillés, et conseils pour préserver ton anonymat.
+                </p>
+                <div class="guide-meta">
+                    <span>⏱️ 7 min de lecture</span>
+                    <span>📅 30 déc. 2025</span>
+                </div>
+            </a>
+
+            <!-- Guide 2 -->
+            <a href="xmr-vs-btc.html" class="guide-card">
+                <div class="guide-emoji">⚖️</div>
+                <h2>XMR vs BTC : Quelle différence ? Lequel choisir ?</h2>
+                <p>
+                    Comparaison complète entre Monero et Bitcoin : anonymat, technologie, fongibilité, cas d'usage. Tableau comparatif et conseils pour choisir celui qui te convient.
+                </p>
+                <div class="guide-meta">
+                    <span>⏱️ 8 min de lecture</span>
+                    <span>📅 30 déc. 2025</span>
+                </div>
+            </a>
+
+            <!-- Guide 3 -->
+            <a href="monero-debutant.html" class="guide-card">
+                <div class="guide-emoji">🎓</div>
+                <h2>Monero pour les débutants : Guide complet 2025</h2>
+                <p>
+                    Tu débutes avec Monero ? Ce guide explique tout : c'est quoi, comment ça marche, comment créer un wallet, envoyer/recevoir, et tous les pièges à éviter. Version simple et accessible.
+                </p>
+                <div class="guide-meta">
+                    <span>⏱️ 10 min de lecture</span>
+                    <span>📅 30 déc. 2025</span>
+                </div>
+            </a>
+
+            <!-- Guide 4 -->
+            <a href="meilleurs-exchanges-monero.html" class="guide-card">
+                <div class="guide-emoji">🏆</div>
+                <h2>Les meilleurs exchanges pour acheter du Monero</h2>
+                <p>
+                    Review détaillée des meilleurs exchanges pour Monero : ChangeNow, StealthEX, FixedFloat, Kraken. Avec KYC ou sans, comparaison des taux, frais, et sécurité. + méthode recommandée.
+                </p>
+                <div class="guide-meta">
+                    <span>⏱️ 12 min de lecture</span>
+                    <span>📅 30 déc. 2025</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="cta-box">
+            <h3>Prêt à passer à l'action ?</h3>
+            <p>Compare les taux de 3 exchanges en temps réel et achète du Monero au meilleur prix</p>
+            <a href="../index.html" class="cta-btn">🔍 Comparer les taux XMR →</a>
+        </div>
+
+        <div class="info-section">
+            <h3>Pourquoi ces guides ?</h3>
+            <p>
+                J'ai créé Le Bon XMR pour acheter du Monero au meilleur taux. Mais j'ai vite réalisé qu'il manquait du contenu de qualité en français sur Monero.
+            </p>
+            <p style="margin-top: 15px;">
+                Ces guides sont le résultat de mes propres recherches et expériences. Tout est gratuit, sans tracking, et régulièrement mis à jour. Si tu as des questions ou suggestions, n'hésite pas à me contacter (liens en bas de page).
+            </p>
+        </div>
+
+
+        <footer>
+            <p>
+                Fait avec ❤️ pour la communauté crypto française
+            </p>
+            <p style="margin-top: 10px;">
+                <small>Le Bon XMR est un comparateur indépendant. Nous ne gérons aucune transaction.</small>
+            </p>
+            <p style="margin-top: 20px; font-size: 14px;">
+                <a href="../a-propos.html" style="color: var(--primary); text-decoration: none;">À propos</a> •
+                <a href="../mentions-legales.html" style="color: var(--primary); text-decoration: none;">Mentions légales</a> •
+                <a href="mailto:lebonxmr@gmail.com" style="color: var(--primary); text-decoration: none;">Contact</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

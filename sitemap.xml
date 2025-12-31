@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Page d'accueil / Comparateur -->
+  <url>
+    <loc>https://lebonxmr.com/</loc>
+    <lastmod>2024-12-31</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Page À propos -->
+  <url>
+    <loc>https://lebonxmr.com/a-propos.html</loc>
+    <lastmod>2024-12-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Mentions légales -->
+  <url>
+    <loc>https://lebonxmr.com/mentions-legales.html</loc>
+    <lastmod>2024-12-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- Page d'index des guides -->
+  <url>
+    <loc>https://lebonxmr.com/guides/</loc>
+    <lastmod>2024-12-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Guide: Acheter Monero en France -->
+  <url>
+    <loc>https://lebonxmr.com/guides/acheter-monero-france.html</loc>
+    <lastmod>2024-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Guide: XMR vs BTC -->
+  <url>
+    <loc>https://lebonxmr.com/guides/xmr-vs-btc.html</loc>
+    <lastmod>2024-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Guide: Monero pour débutants -->
+  <url>
+    <loc>https://lebonxmr.com/guides/monero-debutant.html</loc>
+    <lastmod>2024-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Guide: Meilleurs exchanges Monero -->
+  <url>
+    <loc>https://lebonxmr.com/guides/meilleurs-exchanges-monero.html</loc>
+    <lastmod>2024-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+</urlset>

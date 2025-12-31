@@ -1,0 +1,551 @@
+// ============================================================================
+// XMR EXCHANGE COMPARATOR
+// ============================================================================
+
+// IDs d'affiliation - Tu peux personnaliser ces IDs après inscription
+// Pour ChangeNow : va sur changenow.io/affiliate → Referral link → copie ton ID
+// Pour StealthEX : va sur stealthex.io/affiliate → copie ton referral code
+// Pour Exolix : récupère ton referral ID depuis exolix.com/affiliate-program
+const AFFILIATE_IDS = {
+    changenow: '3b25776136a4ef',  // ✅ Ton ID ChangeNow configuré !
+    stealthex: 'IzL7syI1vy',  // ✅ Ton ID StealthEX configuré !
+    exolix: '4C9EF425CD02A5386531CC4C199F64DC',  // ✅ Ton ID Exolix configuré !
+    godex: 'Kf4tZwtpYEOliAB2',  // ✅ Ton ID Godex configuré !
+    letsexchange: 'uNYqUmSs0u2CXccL'  // ✅ Ton ID LetsExchange configuré !
+};
+
+// État global
+let currentRates = [];
+
+// ============================================================================
+// API CHANGENOW
+// ============================================================================
+
+async function getChangeNowRate(from, to, amount) {
+    try {
+        // 🔑 Clé API ChangeNow configurée ✅
+        const url = `https://api.changenow.io/v1/exchange-amount/${amount}/${from}_${to}/?api_key=16b13fe15b7c2a05ac1104aba4de256361d8e2b643f15d724bcc07538cd8dccd`;
+        const response = await fetch(url);
+
+        if (!response.ok) throw new Error('ChangeNow API error');
+
+        const data = await response.json();
+
+        return {
+            exchange: 'ChangeNow',
+            estimatedAmount: parseFloat(data.estimatedAmount),
+            rate: parseFloat(data.estimatedAmount) / amount,
+            url: `https://changenow.io/exchange?from=${from}&to=${to}&amount=${amount}&ref_id=${AFFILIATE_IDS.changenow}`
+        };
+    } catch (error) {
+        console.error('ChangeNow error:', error);
+        return null;
+    }
+}
+
+// ============================================================================
+// API FIXEDFLOAT
+// ============================================================================
+
+async function getFixedFloatRate(from, to, amount) {
+    try {
+        // 🔑 REQUIS : Ajoute ta clé API FixedFloat ici
+        // 1. Crée un compte sur fixedfloat.com
+        // 2. Va dans Settings → API
+        // 3. Génère une clé gratuite
+        // 4. Décommente la ligne ci-dessous et remplace YOUR_KEY :
+        // 'X-API-KEY': 'YOUR_FIXEDFLOAT_KEY'
+
+        const response = await fetch('https://fixedfloat.com/api/v2/price', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                // 'X-API-KEY': 'YOUR_FIXEDFLOAT_KEY'  // ← Décommente cette ligne !
+            },
+            body: JSON.stringify({
+                fromCcy: from.toUpperCase(),
+                toCcy: to.toUpperCase(),
+                direction: 'from',
+                type: 'float',
+                amount: amount.toString()
+            })
+        });
+
+        if (!response.ok) throw new Error('FixedFloat API error');
+
+        const data = await response.json();
+
+        if (data.code !== 0) throw new Error(data.msg);
+
+        return {
+            exchange: 'FixedFloat',
+            estimatedAmount: parseFloat(data.data.to.amount),
+            rate: parseFloat(data.data.to.amount) / amount,
+            url: `https://fixedfloat.com/?ref=${AFFILIATE_IDS.fixedfloat}`
+        };
+    } catch (error) {
+        console.error('FixedFloat error:', error);
+        return null;
+    }
+}
+
+// ============================================================================
+// API STEALTHEX
+// ============================================================================
+
+async function getStealthEXRate(from, to, amount) {
+    try {
+        // 🔑 Clé API StealthEX configurée ✅
+        const response = await fetch(
+            `https://api.stealthex.io/api/v2/estimate/${from}/${to}?amount=${amount}&api_key=b66e38ef-2b8e-4df3-bc2a-13bd1c44c105&fixed=false`
+        );
+
+        if (!response.ok) throw new Error('StealthEX API error');
+
+        const data = await response.json();
+
+        return {
+            exchange: 'StealthEX',
+            estimatedAmount: parseFloat(data.estimated_amount),
+            rate: parseFloat(data.estimated_amount) / amount,
+            url: `https://stealthex.io/?ref=${AFFILIATE_IDS.stealthex}`
+        };
+    } catch (error) {
+        console.error('StealthEX error:', error);
+        return null;
+    }
+}
+
+// ============================================================================
+// API EXOLIX
+// ============================================================================
+
+async function getExolixRate(from, to, amount) {
+    try {
+        // 🔑 API Key Exolix configurée ✅
+        const response = await fetch(
+            `https://exolix.com/api/v2/rate?coinFrom=${from.toUpperCase()}&coinTo=${to.toUpperCase()}&amount=${amount}&rateType=float`,
+            {
+                headers: {
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxlYm9ueG1yQGdtYWlsLmNvbSIsInN1YiI6NDc1NDMsImlhdCI6MTc2NzE4MTIxNSwiZXhwIjoxOTI0OTY5MjE1fQ.LMvovfoZmca3yAgZ_8iBV9KD9AXqt-2WQhpPHf_ss24'
+                }
+            }
+        );
+
+        if (!response.ok) throw new Error('Exolix API error');
+
+        const data = await response.json();
+
+        return {
+            exchange: 'Exolix',
+            estimatedAmount: parseFloat(data.toAmount),
+            rate: parseFloat(data.rate),
+            url: `https://exolix.com/?ref=${AFFILIATE_IDS.exolix}`
+        };
+    } catch (error) {
+        console.error('Exolix error:', error);
+        return null;
+    }
+}
+
+// ============================================================================
+// API GODEX
+// ============================================================================
+
+async function getGodexRate(from, to, amount) {
+    try {
+        // API Godex (POST request)
+        const response = await fetch('https://api.godex.io/api/v1/info', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                from: from.toUpperCase(),
+                to: to.toUpperCase(),
+                amount: amount.toString()
+            })
+        });
+
+        if (!response.ok) throw new Error('Godex API error');
+
+        const data = await response.json();
+
+        return {
+            exchange: 'Godex',
+            estimatedAmount: parseFloat(data.amount),
+            rate: parseFloat(data.rate),
+            url: `https://godex.io/?aff_id=${AFFILIATE_IDS.godex}&utm_source=affiliate&utm_medium=le_bon_xmr&utm_campaign=${AFFILIATE_IDS.godex}`
+        };
+    } catch (error) {
+        console.error('Godex error:', error);
+        return null;
+    }
+}
+
+// ============================================================================
+// API LETSEXCHANGE
+// ============================================================================
+
+async function getLetsExchangeRate(from, to, amount) {
+    try {
+        // 🔑 API Key LetsExchange configurée ✅
+        const response = await fetch('https://api.letsexchange.io/api/v1/info', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0b2tlbiIsImRhdGEiOnsiaWQiOjE0NjcsImhhc2giOiJleUpwZGlJNkluVjBkemsxWEM4M1VqZG9aRzVzYlVKb1NGUkZUa3RuUFQwaUxDSjJZV3gxWlNJNklsSlFObHd2UkVWSlpXMW5hM1Z1WW5KallXWkNZMlJ2V1hCSFNqZDNSa2xqTmxNNU5WaHVUVVFyTUU5SmJWa3dVbEpVVVVWSFVFVktTbTVLWTJWQlNscG1jRk5PWTNKS2EzcE1lVTFEUTBaUGEyOHlSVGxYTmxkU1dtNHpVaXRXTTBjME1IVk1VVmt6Y1ZVd1p6MGlMQ0p0WVdNaU9pSXhNV1k1TVdFeE0yRmxZV0prWXpVeE1XVmpaR0poTVdZd09XVmxZV1kxTnpJMlpUTXhPR1ptTnpoak56a3hOMlF6WXpnMU1qTTRPR0l5TVdRNFlXSTFJbjA9In0sImlzcyI6Imh0dHBzOlwvXC9hcGkubGV0c2V4Y2hhbmdlLmlvXC9hcGlcL3YxXC9hcGkta2V5IiwiaWF0IjoxNzY3MTgzOTAzLCJleHAiOjIwODg1OTE5MDMsIm5iZiI6MTc2NzE4MzkwMywianRpIjoia01OaUlSRkNxcGY2M29TdyJ9.zyJlour8j8m5xPlgVCKGo41L1xRORoHvDi8Ys-T34SI'
+            },
+            body: JSON.stringify({
+                from: from.toUpperCase(),
+                to: to.toUpperCase(),
+                amount: amount.toString(),
+                affiliate_id: AFFILIATE_IDS.letsexchange
+            })
+        });
+
+        if (!response.ok) throw new Error('LetsExchange API error');
+
+        const data = await response.json();
+
+        return {
+            exchange: 'LetsExchange',
+            estimatedAmount: parseFloat(data.amount),
+            rate: parseFloat(data.rate),
+            url: `https://letsexchange.io/?ref_id=${AFFILIATE_IDS.letsexchange}`
+        };
+    } catch (error) {
+        console.error('LetsExchange error:', error);
+        return null;
+    }
+}
+
+// ============================================================================
+// API SIMPLESWAP (Alternative)
+// ============================================================================
+
+async function getSimpleSwapRate(from, to, amount) {
+    try {
+        // 🔑 REQUIS : Ajoute ta clé API SimpleSwap après api_key=
+        // 1. Crée un compte sur simpleswap.io
+        // 2. Envoie un email à support@simpleswap.io pour demander une clé API
+        // 3. Attends 24-48h leur réponse
+        // 4. Remplace l'espace vide après api_key= par ta clé
+        const response = await fetch(
+            `https://api.simpleswap.io/get_estimated?api_key=&fixed=false&currency_from=${from}&currency_to=${to}&amount=${amount}`
+        );
+
+        if (!response.ok) throw new Error('SimpleSwap API error');
+
+        const data = await response.json();
+
+        return {
+            exchange: 'SimpleSwap',
+            estimatedAmount: parseFloat(data),
+            rate: parseFloat(data) / amount,
+            url: `https://simpleswap.io/?ref=`
+        };
+    } catch (error) {
+        console.error('SimpleSwap error:', error);
+        return null;
+    }
+}
+
+// ============================================================================
+// RÉCUPÉRER TOUS LES TAUX (via Netlify Function pour éviter CORS)
+// ============================================================================
+
+async function getAllRates(from, to, amount) {
+    // Appels directs (pas de CORS)
+    const changeNowPromise = getChangeNowRate(from, to, amount);
+    const exolixPromise = getExolixRate(from, to, amount);
+    const godexPromise = getGodexRate(from, to, amount);
+    const letsexchangePromise = getLetsExchangeRate(from, to, amount);
+
+    // Appel à la Netlify Function pour StealthEX (contourne CORS)
+    const netlifyFunctionPromise = fetch(`/.netlify/functions/get-rates?from=${from}&to=${to}&amount=${amount}`)
+        .then(async res => {
+            if (!res.ok) return [];
+            const data = await res.json();
+            return data.rates || [];
+        })
+        .catch(() => []);
+
+    const [changeNowResult, exolixResult, godexResult, letsexchangeResult, netlifyResults] = await Promise.all([
+        changeNowPromise.catch(() => null),
+        exolixPromise.catch(() => null),
+        godexPromise.catch(() => null),
+        letsexchangePromise.catch(() => null),
+        netlifyFunctionPromise
+    ]);
+
+    // Combiner les résultats
+    const rates = [];
+
+    if (changeNowResult) {
+        rates.push(changeNowResult);
+    }
+
+    if (exolixResult) {
+        rates.push(exolixResult);
+    }
+
+    if (godexResult) {
+        rates.push(godexResult);
+    }
+
+    if (letsexchangeResult) {
+        rates.push(letsexchangeResult);
+    }
+
+    // Ajouter les exchanges de la Netlify Function (StealthEX)
+    netlifyResults.forEach(rate => {
+        // Éviter les doublons
+        if (rate.exchange !== 'ChangeNow' && rate.exchange !== 'Exolix' && rate.exchange !== 'Godex' && rate.exchange !== 'LetsExchange') {
+            rates.push(rate);
+        }
+    });
+
+    rates.sort((a, b) => b.estimatedAmount - a.estimatedAmount);
+
+    return rates;
+}
+
+// ============================================================================
+// RÉCUPÉRER LES PRIX EN EUR (temps réel)
+// ============================================================================
+
+// Mapping des symboles crypto vers IDs CoinGecko
+const COINGECKO_IDS = {
+    'xmr': 'monero',
+    'btc': 'bitcoin',
+    'eth': 'ethereum',
+    'usdc': 'usd-coin',
+    'ltc': 'litecoin',
+    'eur': 'eur'
+};
+
+async function getCryptoPrice(currency) {
+    // Si c'est EUR, retourner 1
+    if (currency.toLowerCase() === 'eur') {
+        return 1;
+    }
+
+    const coinId = COINGECKO_IDS[currency.toLowerCase()];
+    if (!coinId) {
+        console.warn(`Prix non disponible pour ${currency}, utilisation fallback`);
+        return 1;
+    }
+
+    try {
+        const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=eur`);
+        const data = await response.json();
+        return data[coinId]?.eur || 1;
+    } catch (error) {
+        console.error('Erreur récupération prix:', error);
+        // Fallback sur prix approximatif si l'API échoue
+        const fallbackPrices = { 'xmr': 180, 'btc': 85000, 'eth': 3200, 'usdc': 0.95, 'ltc': 100 };
+        return fallbackPrices[currency.toLowerCase()] || 1;
+    }
+}
+
+// ============================================================================
+// AFFICHAGE DES RÉSULTATS
+// ============================================================================
+
+async function displayResults(rates, fromCurrency, toCurrency) {
+    const grid = document.getElementById('exchanges-grid');
+    grid.innerHTML = '';
+
+    if (rates.length === 0) {
+        showError('Aucun taux disponible pour le moment. Veuillez réessayer.');
+        return;
+    }
+
+    // Calculer les économies vs pire taux
+    const bestRate = rates[0];
+    const worstRate = rates[rates.length - 1];
+    const savings = bestRate.estimatedAmount - worstRate.estimatedAmount;
+
+    // Récupérer le prix réel en EUR
+    const toCurrencyPriceEUR = await getCryptoPrice(toCurrency);
+    const savingsEUR = savings * toCurrencyPriceEUR;
+
+    rates.forEach((rate, index) => {
+        const isBest = index === 0;
+        const isWorst = index === rates.length - 1;
+
+        const card = document.createElement('div');
+        card.className = `exchange-card ${isBest ? 'best' : ''}`;
+
+        // Calculer la différence vs meilleur taux (en montant et en EUR)
+        const diffVsBest = rate.estimatedAmount - bestRate.estimatedAmount;
+        const diffVsBestEUR = diffVsBest * toCurrencyPriceEUR;
+        const diffPercent = ((diffVsBest / bestRate.estimatedAmount) * 100).toFixed(2);
+
+        card.innerHTML = `
+            <div class="exchange-logo">
+                ${getExchangeLogo(rate.exchange)}
+            </div>
+
+            <div class="exchange-info">
+                <div class="exchange-name">
+                    ${rate.exchange}
+                    ${isBest ? '<span class="best-badge">✅ Meilleur taux</span>' : ''}
+                    ${!isBest && Math.abs(diffVsBestEUR) > 0.01 ? '<span style="color: #ff9966; margin-left: 10px; font-size: 13px;">−' + Math.abs(diffVsBestEUR).toFixed(2) + '€ vs meilleur</span>' : ''}
+                </div>
+                <div class="exchange-rate">
+                    1 ${fromCurrency.toUpperCase()} = ${rate.rate.toFixed(6)} ${toCurrency.toUpperCase()}
+                </div>
+            </div>
+
+            <div class="exchange-amount">
+                <div class="amount-value">${rate.estimatedAmount.toFixed(6)}</div>
+                <div class="amount-currency">${toCurrency.toUpperCase()}</div>
+            </div>
+
+            <button class="exchange-btn" onclick="window.open('${rate.url}', '_blank')">
+                Échanger →
+            </button>
+        `;
+
+        grid.appendChild(card);
+    });
+
+    // Mettre à jour le champ "Vous recevez" avec le meilleur taux
+    if (rates.length > 0) {
+        document.getElementById('to-amount').value = rates[0].estimatedAmount.toFixed(6);
+    }
+}
+
+function getExchangeLogo(exchangeName) {
+    const logos = {
+        'ChangeNow': 'CN',
+        'FixedFloat': 'FF',
+        'StealthEX': 'SX',
+        'Exolix': 'EX',
+        'Godex': 'GD',
+        'LetsExchange': 'LE',
+        'SimpleSwap': 'SS'
+    };
+    return logos[exchangeName] || exchangeName.substring(0, 2);
+}
+
+// Temps estimés pour chaque exchange (en minutes)
+function getExchangeETA(exchangeName) {
+    const etas = {
+        'ChangeNow': '5-15 min',
+        'FixedFloat': '10-30 min',
+        'StealthEX': '5-20 min',
+        'Exolix': '5-15 min',
+        'Godex': '10-30 min',
+        'LetsExchange': '5-20 min',
+        'SimpleSwap': '10-20 min'
+    };
+    return etas[exchangeName] || '10-30 min';
+}
+
+// ============================================================================
+// GESTION DES ERREURS
+// ============================================================================
+
+function showError(message) {
+    const errorDiv = document.getElementById('error');
+    const errorMessage = document.getElementById('error-message');
+
+    errorMessage.textContent = message;
+    errorDiv.classList.add('active');
+
+    setTimeout(() => {
+        errorDiv.classList.remove('active');
+    }, 5000);
+}
+
+function hideError() {
+    document.getElementById('error').classList.remove('active');
+}
+
+// ============================================================================
+// GESTION DU FORMULAIRE
+// ============================================================================
+
+async function compareRates() {
+    const fromCurrency = document.getElementById('from-currency').value;
+    const toCurrency = document.getElementById('to-currency').value;
+    const amount = parseFloat(document.getElementById('from-amount').value);
+
+    // Validation
+    if (!amount || amount <= 0) {
+        showError('Veuillez entrer un montant valide');
+        return;
+    }
+
+    if (fromCurrency === toCurrency) {
+        showError('Veuillez sélectionner des devises différentes');
+        return;
+    }
+
+    // UI
+    hideError();
+    document.getElementById('loading').classList.add('active');
+    document.getElementById('results').classList.remove('active');
+    document.getElementById('compare-btn').disabled = true;
+
+    try {
+        // Récupérer les taux
+        const rates = await getAllRates(fromCurrency, toCurrency, amount);
+        currentRates = rates;
+
+        // Afficher les résultats
+        displayResults(rates, fromCurrency, toCurrency);
+
+        // Afficher la section résultats
+        document.getElementById('results').classList.add('active');
+
+    } catch (error) {
+        console.error('Error:', error);
+        showError('Une erreur est survenue. Veuillez réessayer.');
+    } finally {
+        document.getElementById('loading').classList.remove('active');
+        document.getElementById('compare-btn').disabled = false;
+    }
+}
+
+// ============================================================================
+// ÉVÉNEMENTS
+// ============================================================================
+
+document.getElementById('compare-btn').addEventListener('click', compareRates);
+
+document.getElementById('refresh-btn').addEventListener('click', compareRates);
+
+// Comparer au changement de devise
+document.getElementById('from-currency').addEventListener('change', () => {
+    if (currentRates.length > 0) {
+        compareRates();
+    }
+});
+
+document.getElementById('to-currency').addEventListener('change', () => {
+    if (currentRates.length > 0) {
+        compareRates();
+    }
+});
+
+// Entrée : permettre d'appuyer sur Enter
+document.getElementById('from-amount').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        compareRates();
+    }
+});
+
+// ============================================================================
+// INITIALISATION
+// ============================================================================
+
+// Comparer automatiquement au chargement (optionnel)
+// compareRates();
+
+console.log('🔍 Le Bon XMR loaded');

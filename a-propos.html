@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À propos - Le Bon XMR</title>
+    <meta name="description" content="Découvrez Le Bon XMR : pourquoi j'ai créé ce comparateur de taux Monero gratuit et sans tracking. L'histoire du premier comparateur XMR français.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #FF6600;
+            --primary-dark: #CC5200;
+            --primary-light: #FF9933;
+            --bg-dark: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --text: #ffffff;
+            --text-muted: #999999;
+            --border: #2a2a2a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Gradient Background */
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(255, 102, 0, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 153, 51, 0.06) 0%, transparent 50%);
+        }
+
+        nav {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 10, 0.8);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 18px;
+            margin-bottom: 60px;
+        }
+
+        .section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .section h2 {
+            color: var(--primary);
+            font-size: 28px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .section p {
+            color: var(--text-muted);
+            font-size: 17px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .section p:last-child {
+            margin-bottom: 0;
+        }
+
+        .section strong {
+            color: var(--text);
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 50px 0;
+            box-shadow: 0 20px 60px rgba(255, 102, 0, 0.3);
+        }
+
+        .cta-box h3 {
+            margin: 0 0 15px 0;
+            color: white;
+            font-size: 24px;
+        }
+
+        .cta-box p {
+            margin-bottom: 25px;
+            opacity: 0.9;
+            font-size: 16px;
+            color: white;
+        }
+
+        .cta-btn {
+            background: white;
+            color: var(--primary);
+            padding: 16px 40px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-block;
+            transition: all 0.3s;
+            font-size: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 80px;
+            padding: 40px 20px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        @media screen and (max-width: 900px) {
+            .nav-container {
+                padding: 0 15px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            .nav-links a {
+                font-size: 14px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+            }
+
+            .section {
+                padding: 25px;
+            }
+
+            .section h2 {
+                font-size: 24px;
+            }
+
+            .section p {
+                font-size: 16px;
+            }
+
+            .cta-box {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-bg"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span>🔍</span>
+                <span>Le Bon XMR</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Comparateur</a>
+                <a href="guides/index.html">Guides</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>À propos de Le Bon XMR</h1>
+        <p class="subtitle">
+            L'histoire du comparateur français de taux Monero
+        </p>
+
+        <!-- Section 1: Pourquoi -->
+        <div class="section">
+            <h2>Pourquoi j'ai créé Le Bon XMR</h2>
+            <p>
+                J'utilise Monero depuis plusieurs années. Pas par militantisme, juste parce que c'est la seule crypto qui fait vraiment ce qu'elle promet : protéger ta vie privée.
+            </p>
+            <p>
+                Le problème ? Chaque fois que je voulais acheter du XMR, je perdais du temps à comparer les taux entre ChangeNow, StealthEX, FixedFloat... Les différences pouvaient atteindre 3-5%, soit plusieurs dizaines d'euros sur un échange classique. C'était frustrant.
+            </p>
+            <p>
+                Alors j'ai créé Le Bon XMR. Un outil simple qui fait exactement ce dont j'avais besoin : comparer les taux en 10 secondes et choisir le meilleur. Pas de blabla, pas de tracking, juste les chiffres.
+            </p>
+            <p>
+                Si ça peut t'aider à économiser quelques euros et à rendre Monero plus accessible, tant mieux. C'est tout l'objectif.
+            </p>
+        </div>
+
+        <!-- Section 2: C'est quoi -->
+        <div class="section">
+            <h2>🔍 C'est quoi Le Bon XMR ?</h2>
+            <p>
+                Le Bon XMR est un comparateur français qui te permet de comparer en temps réel les taux de 3 exchanges (ChangeNow, StealthEX, FixedFloat) pour acheter ou vendre du Monero.
+            </p>
+            <p>
+                <strong>Pourquoi l'utiliser ?</strong> Parce que les taux varient constamment et qu'une différence de 2-5% peut représenter plusieurs dizaines d'euros. En 10 secondes, tu vois le meilleur taux et tu économises de l'argent.
+            </p>
+        </div>
+
+        <!-- Section 3: Comment ça marche -->
+        <div class="section">
+            <h2>💡 Comment ça fonctionne ?</h2>
+            <p>
+                <strong>C'est gratuit ?</strong> Oui, totalement. Je gagne une petite commission d'affiliation quand tu utilises les exchanges via mes liens, mais ça ne te coûte rien de plus. Tu paies le même prix, et tu m'aides à faire vivre le site.
+            </p>
+            <p>
+                <strong>Aucun tracking.</strong> Pas de Google Analytics, pas de cookies, pas de collecte de données. Le site respecte ta vie privée, comme Monero.
+            </p>
+            <p>
+                <strong>Je ne gère aucune transaction.</strong> Les échanges sont effectués directement par les plateformes partenaires (ChangeNow, StealthEX, FixedFloat). Je compare juste les taux pour toi.
+            </p>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-box">
+            <h3>Prêt à comparer les taux ?</h3>
+            <p>Trouve le meilleur taux XMR en 10 secondes</p>
+            <a href="index.html" class="cta-btn">🔍 Comparer maintenant →</a>
+        </div>
+
+        <!-- Section 4: Contact -->
+        <div class="section">
+            <h2>📧 Des questions ?</h2>
+            <p>
+                Si tu as des questions, des suggestions, ou si tu veux juste dire bonjour, n'hésite pas à m'écrire : <a href="mailto:lebonxmr@gmail.com" style="color: var(--primary); text-decoration: none;">lebonxmr@gmail.com</a>
+            </p>
+            <p>
+                Je réponds à tous les messages, promis.
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <p>
+            Fait avec ❤️ pour la communauté crypto française
+        </p>
+        <p style="margin-top: 10px;">
+            <small>Le Bon XMR est un comparateur indépendant. Nous ne gérons aucune transaction - les échanges sont effectués par nos partenaires de confiance.</small>
+        </p>
+        <p style="margin-top: 20px; font-size: 14px;">
+            <a href="a-propos.html">À propos</a> •
+            <a href="mentions-legales.html">Mentions légales</a> •
+            <a href="mailto:lebonxmr@gmail.com">Contact</a>
+        </p>
+    </footer>
+</body>
+</html>

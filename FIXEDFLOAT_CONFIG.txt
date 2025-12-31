@@ -1,0 +1,29 @@
+FixedFloat - Configuration en attente d'approbation
+====================================================
+
+STATUS: Pending (en attente d'approbation par FixedFloat)
+Dernière vérification: 29/12/2025 22:15
+
+Clés API FixedFloat (à activer quand approuvé):
+-----------------------------------------------
+API Key: fBoxwfkvvKJ5DKKUqIy54GCn9umQwDnUTiydTcWe
+API Secret: gTHshNZQeCEAK5mNv1A8BYu3oUaTsS2plI2m9YlK
+
+Code d'affiliation FixedFloat:
+------------------------------
+Ref code: v9ku3b3b
+URL: https://fixedfloat.com/?ref=v9ku3b3b
+
+Instructions pour plus tard:
+-----------------------------
+1. Vérifier que le statut est passé de "Pending" à "Approved" sur FixedFloat
+2. Mettre à jour netlify/functions/get-rates.js avec les nouvelles clés
+3. Remplacer FIXEDFLOAT_AFFILIATE par 'v9ku3b3b'
+4. Redéployer sur Netlify
+5. Tester BTC → XMR pour voir les 3 exchanges
+
+Notes:
+------
+- Délai d'approbation: généralement 24-48h
+- Type de compte: Commercial avec programme d'affiliation
+- Commission estimée: ~0.5% par échange

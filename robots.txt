@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://lebonxmr.com/sitemap.xml
+
+# Crawl-delay (optional, respectful to search engines)
+Crawl-delay: 1

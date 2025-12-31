@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentions légales - Le Bon XMR</title>
+    <meta name="description" content="Mentions légales du site Le Bon XMR, comparateur français de taux Monero.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #FF6600;
+            --primary-dark: #CC5200;
+            --primary-light: #FF9933;
+            --bg-dark: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --text: #ffffff;
+            --text-muted: #999999;
+            --border: #2a2a2a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Gradient Background */
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(255, 102, 0, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 153, 51, 0.06) 0%, transparent 50%);
+        }
+
+        /* Navigation */
+        nav {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 10, 0.8);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        h1 {
+            font-size: 42px;
+            margin-bottom: 40px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: var(--primary);
+            font-size: 24px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        ul {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .legal-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 80px;
+            padding: 40px 20px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        @media screen and (max-width: 900px) {
+            .nav-container {
+                padding: 0 15px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            .nav-links a {
+                font-size: 14px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            .legal-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-bg"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span>🔍</span>
+                <span>Le Bon XMR</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Comparateur</a>
+                <a href="guides/index.html">Guides</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Mentions légales</h1>
+
+        <div class="legal-section">
+            <h2>1. Éditeur du site</h2>
+            <p>
+                <strong>Nom du site :</strong> Le Bon XMR<br>
+                <strong>URL :</strong> <a href="https://lebonxmr.com">https://lebonxmr.com</a><br>
+                <strong>Éditeur :</strong> Site personnel édité par un particulier<br>
+                <strong>Contact :</strong> <a href="mailto:lebonxmr@gmail.com">lebonxmr@gmail.com</a>
+            </p>
+        </div>
+
+        <div class="legal-section">
+            <h2>2. Hébergement</h2>
+            <p>
+                <strong>Hébergeur :</strong> Netlify, Inc.<br>
+                <strong>Adresse :</strong> 44 Montgomery Street, Suite 300, San Francisco, CA 94104, USA<br>
+                <strong>Site web :</strong> <a href="https://www.netlify.com" target="_blank" rel="noopener">www.netlify.com</a>
+            </p>
+        </div>
+
+        <div class="legal-section">
+            <h2>3. Nature du service</h2>
+            <p>
+                Le Bon XMR est un <strong>comparateur indépendant</strong> de taux de change pour la cryptomonnaie Monero (XMR).
+            </p>
+            <p>
+                Le site affiche des estimations de taux en temps réel provenant de plateformes d'échange tierces (ChangeNow, StealthEX, FixedFloat).
+            </p>
+            <p>
+                <strong>Important :</strong> Le Bon XMR ne gère, n'exécute ni ne stocke aucune transaction. Les échanges sont effectués directement par les plateformes partenaires.
+            </p>
+        </div>
+
+        <div class="legal-section">
+            <h2>4. Programme d'affiliation</h2>
+            <p>
+                Le site participe aux programmes d'affiliation de ChangeNow et StealthEX. Lorsque vous effectuez un échange via les liens du site, une commission peut être versée à l'éditeur, sans surcoût pour l'utilisateur.
+            </p>
+            <p>
+                Cette commission permet de financer le développement et la maintenance du site.
+            </p>
+        </div>
+
+        <div class="legal-section">
+            <h2>5. Données personnelles et vie privée</h2>
+            <p>
+                Le Bon XMR respecte votre vie privée :
+            </p>
+            <ul>
+                <li><strong>Aucun tracking</strong> : pas de Google Analytics, Facebook Pixel ou autre outil de suivi</li>
+                <li><strong>Aucun cookie</strong> : le site ne dépose aucun cookie sur votre navigateur</li>
+                <li><strong>Aucune collecte de données</strong> : aucune donnée personnelle n'est stockée ou transmise à l'éditeur</li>
+            </ul>
+            <p>
+                Les échanges effectués via les plateformes partenaires sont soumis aux politiques de confidentialité de ces plateformes.
+            </p>
+        </div>
+
+        <div class="legal-section">
+            <h2>6. Propriété intellectuelle</h2>
+            <p>
+                Le contenu du site (textes, design, code) est la propriété de l'éditeur, sauf mention contraire.
+            </p>
+            <p>
+                Les marques et logos des plateformes d'échange (ChangeNow, StealthEX, FixedFloat) appartiennent à leurs propriétaires respectifs.
+            </p>
+        </div>
+
+        <div class="legal-section">
+            <h2>7. Responsabilité</h2>
+            <p>
+                Les taux affichés sur Le Bon XMR sont fournis à titre indicatif et peuvent varier au moment de l'exécution de l'échange.
+            </p>
+            <p>
+                L'éditeur ne peut être tenu responsable :
+            </p>
+            <ul>
+                <li>Des échanges effectués sur les plateformes tierces</li>
+                <li>De l'exactitude des taux affichés</li>
+                <li>Des délais de transaction</li>
+                <li>Des problèmes techniques rencontrés sur les plateformes partenaires</li>
+            </ul>
+            <p>
+                Pour toute réclamation relative à un échange, veuillez contacter directement la plateforme concernée.
+            </p>
+        </div>
+
+        <div class="legal-section">
+            <h2>8. Droit applicable</h2>
+            <p>
+                Les présentes mentions légales sont régies par le droit français.
+            </p>
+            <p>
+                En cas de litige, les tribunaux français seront seuls compétents.
+            </p>
+        </div>
+
+        <div class="legal-section">
+            <h2>9. Contact</h2>
+            <p>
+                Pour toute question concernant ces mentions légales ou le fonctionnement du site, vous pouvez nous contacter à l'adresse : <a href="mailto:lebonxmr@gmail.com">lebonxmr@gmail.com</a>
+            </p>
+        </div>
+
+        <p style="margin-top: 40px; text-align: center; color: var(--text-muted); font-size: 14px;">
+            Dernière mise à jour : 31 décembre 2024
+        </p>
+    </div>
+
+    <footer>
+        <p>
+            Fait avec ❤️ pour la communauté crypto française
+        </p>
+        <p style="margin-top: 10px;">
+            <small>Le Bon XMR est un comparateur indépendant. Nous ne gérons aucune transaction - les échanges sont effectués par nos partenaires de confiance.</small>
+        </p>
+        <p style="margin-top: 20px; font-size: 14px;">
+            <a href="a-propos.html">À propos</a> •
+            <a href="mentions-legales.html">Mentions légales</a> •
+            <a href="mailto:lebonxmr@gmail.com">Contact</a>
+        </p>
+    </footer>
+</body>
+</html>
