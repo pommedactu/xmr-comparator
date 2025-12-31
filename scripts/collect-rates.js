@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Configuration
-const AMOUNT = 0.01; // Montant de référence : 0.01 BTC
+const AMOUNT = 1; // Montant de référence : 1 BTC (pour correspondre au comparateur)
 const FROM = 'btc';
 const TO = 'xmr';
 
