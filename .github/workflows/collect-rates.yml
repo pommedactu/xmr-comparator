@@ -30,4 +30,4 @@ jobs:
           git config --global user.name 'Rate Collector Bot'
           git config --global user.email 'bot@lebonxmr.com'
           git add data/rate-history.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "📊 Update rates - $(date +'%Y-%m-%d %H:%M')" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "📊 Update rates - $(date +'%Y-%m-%d %H:%M')" && git pull --rebase origin main && git push)
