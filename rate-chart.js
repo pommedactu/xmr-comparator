@@ -107,52 +107,6 @@ function createRateChart(history) {
         }
     });
 
-    // Afficher les stats
-    displayStats(last24h, exchanges);
-}
-
-function displayStats(last24h, exchanges) {
-    const statsContainer = document.getElementById('rate-stats');
-
-    // Calculer le meilleur taux actuel et le meilleur des dernières 24h
-    const latest = last24h[last24h.length - 1];
-    let bestNow = { exchange: '', rate: 0 };
-    let best24h = { exchange: '', rate: 0, time: '' };
-
-    // Meilleur taux actuel
-    exchanges.forEach(ex => {
-        if (latest.rates[ex] && latest.rates[ex] > bestNow.rate) {
-            bestNow = { exchange: ex, rate: latest.rates[ex] };
-        }
-    });
-
-    // Meilleur taux sur 24h
-    last24h.forEach(point => {
-        exchanges.forEach(ex => {
-            if (point.rates[ex] && point.rates[ex] > best24h.rate) {
-                best24h = {
-                    exchange: ex,
-                    rate: point.rates[ex],
-                    time: new Date(point.timestamp).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
-                };
-            }
-        });
-    });
-
-    statsContainer.innerHTML = `
-        <div class="stat-card">
-            <div class="stat-label">Meilleur taux actuel</div>
-            <div class="stat-value">${bestNow.rate.toFixed(4)} XMR</div>
-            <div class="stat-exchange">${bestNow.exchange}</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-label">Meilleur moment (24h)</div>
-            <div class="stat-value">${best24h.rate.toFixed(4)} XMR</div>
-            <div class="stat-exchange">${best24h.exchange} à ${best24h.time}</div>
-        </div>
-    `;
-}
-
 // Initialiser au chargement de la page
 document.addEventListener('DOMContentLoaded', async () => {
     const history = await loadRateHistory();
