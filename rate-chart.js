@@ -106,6 +106,7 @@ function createRateChart(history) {
             }
         }
     });
+}
 
 // Initialiser au chargement de la page
 document.addEventListener('DOMContentLoaded', async () => {
