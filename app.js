@@ -11,7 +11,8 @@ const AFFILIATE_IDS = {
     stealthex: 'IzL7syI1vy',  // ✅ Ton ID StealthEX configuré !
     exolix: '4C9EF425CD02A5386531CC4C199F64DC',  // ✅ Ton ID Exolix configuré !
     godex: 'Kf4tZwtpYEOliAB2',  // ✅ Ton ID Godex configuré !
-    letsexchange: 'uNYqUmSs0u2CXccL'  // ✅ Ton ID LetsExchange configuré !
+    letsexchange: 'uNYqUmSs0u2CXccL',  // ✅ Ton ID LetsExchange configuré !
+    simpleswap: '10e946e8b6ec'  // ✅ Ton ID SimpleSwap configuré !
 };
 
 // État global
