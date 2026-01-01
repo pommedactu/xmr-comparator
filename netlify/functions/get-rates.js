@@ -36,8 +36,7 @@ exports.handler = async (event, context) => {
         const GODEX_AFFILIATE = 'Kf4tZwtpYEOliAB2';
         const LETSEXCHANGE_BEARER = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0b2tlbiIsImRhdGEiOnsiaWQiOjE0NjcsImhhc2giOiJleUpwZGlJNkluVjBkemsxWEM4M1VqZG9aRzVzYlVKb1NGUkZUa3RuUFQwaUxDSjJZV3gxWlNJNklsSlFObHd2UkVWSlpXMW5hM1Z1WW5KallXWkNZMlJ2V1hCSFNqZDNSa2xqTmxNNU5WaHVUVVFyTUU5SmJWa3dVbEpVVVVWSFVFVktTbTVLWTJWQlNscG1jRk5PWTNKS2EzcE1lVTFEUTBaUGEyOHlSVGxYTmxkU1dtNHpVaXRXTTBjME1IVk1VVmt6Y1ZVd1p6MGlMQ0p0WVdNaU9pSXhNV1k1TVdFeE0yRmxZV0prWXpVeE1XVmpaR0poTVdZd09XVmxZV1kxTnpJMlpUTXhPR1ptTnpoak56a3hOMlF6WXpnMU1qTTRPR0l5TVdRNFlXSTFJbjA9In0sImlzcyI6Imh0dHBzOlwvXC9hcGkubGV0c2V4Y2hhbmdlLmlvXC9hcGlcL3YxXC9hcGkta2V5IiwiaWF0IjoxNzY3MTgzOTAzLCJleHAiOjIwODg1OTE5MDMsIm5iZiI6MTc2NzE4MzkwMywianRpIjoia01OaUlSRkNxcGY2M29TdyJ9.zyJlour8j8m5xPlgVCKGo41L1xRORoHvDi8Ys-T34SI';
         const LETSEXCHANGE_AFFILIATE = 'uNYqUmSs0u2CXccL';
-        const SIMPLESWAP_KEY = 'eb26a789-26d0-4f50-bc26-03c457ed4547';
-        const SIMPLESWAP_AFFILIATE = '10e946e8b6ec';
+        // SimpleSwap removed - identical rates to StealthEX (uses same backend)
         // FixedFloat removed - requires user data storage (IP, user-agent) for 1 year
 
         const results = await Promise.allSettled([
@@ -125,25 +124,6 @@ exports.handler = async (event, context) => {
                         estimatedAmount: parseFloat(data.amount),
                         rate: parseFloat(data.rate),
                         url: `https://letsexchange.io/?ref_id=${LETSEXCHANGE_AFFILIATE}`
-                    };
-                })
-                .catch(() => null),
-
-            // SimpleSwap
-            fetch(`https://api.simpleswap.io/v3/estimates?tickerFrom=${from}&tickerTo=${to}&networkFrom=${from}&networkTo=${to}&amount=${amount}&fixed=false`, {
-                headers: {
-                    'Accept': 'application/json',
-                    'X-API-KEY': SIMPLESWAP_KEY
-                }
-            })
-                .then(async res => {
-                    if (!res.ok) return null;
-                    const data = await res.json();
-                    return {
-                        exchange: 'SimpleSwap',
-                        estimatedAmount: parseFloat(data.result.estimatedAmount),
-                        rate: parseFloat(data.result.estimatedAmount) / parseFloat(amount),
-                        url: `https://simpleswap.io/?ref=${SIMPLESWAP_AFFILIATE}`
                     };
                 })
                 .catch(() => null)

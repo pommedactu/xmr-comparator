@@ -11,7 +11,7 @@ Compare en temps réel les taux de 5 exchanges sans KYC et trouve le meilleur pr
 ## 🎯 Pourquoi Le Bon XMR ?
 
 - **🚀 Temps réel** : Taux actualisés toutes les heures
-- **💰 Meilleur prix** : Compare 6 exchanges en un clic
+- **💰 Meilleur prix** : Compare 5 exchanges en un clic
 - **🔐 Sans KYC** : Tous les exchanges sont no-KYC
 - **📊 Graphique 24h** : Visualise l'évolution des taux
 - **📚 Guides français** : Tutoriels complets pour débutants
@@ -22,13 +22,12 @@ Compare en temps réel les taux de 5 exchanges sans KYC et trouve le meilleur pr
 ## ✨ Fonctionnalités
 
 ### 🔄 Comparateur de taux
-Compare instantanément les taux de 6 exchanges :
+Compare instantanément les taux de 5 exchanges :
 - **ChangeNow** - Rapide et fiable
 - **StealthEX** - Interface simple
 - **Exolix** - Bons taux
 - **Godex** - Pas de limite
 - **LetsExchange** - Stable
-- **SimpleSwap** - Frais compétitifs
 
 ### 📈 Graphique d'historique
 - Évolution des taux sur 24h
@@ -69,7 +68,6 @@ Assistant pas-à-pas pour les débutants absolus :
 - Exolix API
 - Godex API
 - LetsExchange API
-- SimpleSwap API
 
 ### Structure du projet
 ```
@@ -133,8 +131,7 @@ const AFFILIATE_IDS = {
     stealthex: 'TON_ID_ICI',
     exolix: 'TON_ID_ICI',
     godex: 'TON_ID_ICI',
-    letsexchange: 'TON_ID_ICI',
-    simpleswap: 'TON_ID_ICI'
+    letsexchange: 'TON_ID_ICI'
 };
 ```
 
@@ -194,14 +191,13 @@ Les contributions sont les bienvenues !
 ## 📈 Roadmap
 
 ### ✅ Fait
-- [x] Comparateur 6 exchanges
+- [x] Comparateur 5 exchanges
 - [x] Graphique historique 24h
 - [x] Guides français complets
 - [x] Wizard premier achat
 - [x] Collecte automatique des taux
 - [x] Design responsive
 - [x] Mode sombre
-- [x] SimpleSwap intégré
 
 ### 🔜 À venir
 - [ ] Graphique 7 jours
@@ -280,7 +276,7 @@ Avec mention de l'auteur original.
 ## 💝 Remerciements
 
 - La communauté **Monero** pour la crypto qui tient ses promesses
-- Les exchanges **ChangeNow, StealthEX, Exolix, Godex, LetsExchange, SimpleSwap** pour leurs APIs
+- Les exchanges **ChangeNow, StealthEX, Exolix, Godex, LetsExchange** pour leurs APIs
 - **Chart.js** pour les graphiques
 - **Netlify** pour l'hébergement gratuit
 
