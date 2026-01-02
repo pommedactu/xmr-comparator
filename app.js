@@ -132,6 +132,9 @@ async function displayResults(rates, fromCurrency, toCurrency) {
                     ${isBest ? '<span class="best-badge">✅ Meilleur taux</span>' : ''}
                     ${!isBest && Math.abs(diffVsBestEUR) > 0.01 ? '<span style="color: #ff9966; margin-left: 10px; font-size: 13px;">−' + Math.abs(diffVsBestEUR).toFixed(2) + '€ vs meilleur</span>' : ''}
                 </div>
+                <div class="exchange-badges">
+                    ${getExchangeBadges(rate.exchange)}
+                </div>
                 <div class="exchange-rate">
                     1 ${fromCurrency.toUpperCase()} = ${rate.rate.toFixed(6)} ${toCurrency.toUpperCase()}
                 </div>
@@ -166,6 +169,19 @@ function getExchangeLogo(exchangeName) {
         'SimpleSwap': 'SS'
     };
     return logos[exchangeName] || exchangeName.substring(0, 2);
+}
+
+function getExchangeBadges(exchangeName) {
+    const badges = {
+        'ChangeNow': '⭐ Depuis 2017 · ⚡ Rapide · 💎 Grande marque',
+        'StealthEX': '🔐 Privacy-focused · ⭐ Depuis 2018 · 🏆 Communauté XMR',
+        'Exolix': '💰 Excellent rapport · ⭐ Depuis 2018 · 🔒 Zero logs',
+        'Godex': '🚀 Sans limites · ⭐ Depuis 2017 · 🔐 Ultra no-KYC',
+        'LetsExchange': '✅ Support réactif · ⭐ Depuis 2020 · 💳 Large choix'
+    };
+
+    const badgeText = badges[exchangeName] || '';
+    return badgeText ? `<span class="exchange-badge-line">${badgeText}</span>` : '';
 }
 
 // Temps estimés pour chaque exchange (en minutes)
