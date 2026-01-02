@@ -981,17 +981,8 @@
         </div>
     </div>
 
-    <!-- Rate Chart Section -->
-    <section class="rate-chart-section" id="rate-chart-container">
-        <h2 class="section-title">📊 Évolution des taux sur 24h</h2>
-        <div id="rate-stats" class="rate-stats"></div>
-        <div class="chart-wrapper">
-            <canvas id="rateChart"></canvas>
-        </div>
-    </section>
-
     <!-- Why These Exchanges - Compact (Hidden by default, shown after comparison) -->
-    <section id="why-exchanges-section" style="display: none; max-width: 1200px; margin: 60px auto; padding: 0 20px;">
+    <section id="why-exchanges-section" style="display: none; max-width: 1200px; margin: 60px auto 40px; padding: 0 20px;">
         <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 30px; text-align: center;">
             <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 12px; color: var(--text);">
                 🔐 Pourquoi ces 5 exchanges ?
@@ -1003,6 +994,39 @@
             <a href="criteres.html" style="display: inline-block; background: var(--bg-dark); border: 1px solid var(--primary); color: var(--primary); padding: 10px 24px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 14px; transition: all 0.3s;" onmouseover="this.style.background='var(--primary)'; this.style.color='white'" onmouseout="this.style.background='var(--bg-dark)'; this.style.color='var(--primary)'">
                 Voir nos critères détaillés →
             </a>
+        </div>
+    </section>
+
+    <!-- Rate Chart Section -->
+    <section class="rate-chart-section" id="rate-chart-container">
+        <h2 class="section-title">📊 Évolution des taux sur 24h</h2>
+        <div id="rate-stats" class="rate-stats"></div>
+        <div class="chart-wrapper">
+            <canvas id="rateChart"></canvas>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2 class="features-title">Pourquoi Le Bon XMR ?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="feature-icon">💰</span>
+                <h3>Tu économises vraiment</h3>
+                <p>On te montre exactement combien tu gagnes en euros avec le meilleur taux. Pas de blabla, que des chiffres.</p>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">🔒</span>
+                <h3>Privacy First</h3>
+                <p>Aucun tracking, aucun cookie, aucune donnée collectée. Respect de ta vie privée, comme Monero.</p>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">⚡</span>
+                <h3>Temps réel</h3>
+                <p>Les taux sont mis à jour en direct via les APIs. Ce que tu vois = ce que tu obtiens.</p>
+            </div>
         </div>
     </section>
 
