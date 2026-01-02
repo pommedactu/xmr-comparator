@@ -254,6 +254,9 @@ async function compareRates() {
         // Afficher la section résultats
         document.getElementById('results').classList.add('active');
 
+        // Afficher la section "Pourquoi ces exchanges"
+        document.getElementById('why-exchanges-section').style.display = 'block';
+
     } catch (error) {
         console.error('Error:', error);
         showError('Une erreur est survenue. Veuillez réessayer.');
