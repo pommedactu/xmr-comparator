@@ -173,11 +173,11 @@ function getExchangeLogo(exchangeName) {
 
 function getExchangeBadges(exchangeName) {
     const badges = {
-        'ChangeNow': '⭐ Depuis 2017 · ⚡ Rapide · 💎 Grande marque',
-        'StealthEX': '🔐 Privacy-focused · ⭐ Depuis 2018 · 🏆 Communauté XMR',
-        'Exolix': '💰 Excellent rapport · ⭐ Depuis 2018 · 🔒 Zero logs',
+        'ChangeNow': '⭐ Depuis 2017 · ⚡ Rapide · 📊 Recommandé Monerica',
+        'StealthEX': '🔐 Privacy-focused · ⭐ Depuis 2018 · 📊 Recommandé Monerica',
+        'Exolix': '💰 Bons taux · ⭐ Depuis 2018 · 📊 Recommandé Monerica',
         'Godex': '🚀 Sans limites · ⭐ Depuis 2017 · 🔐 Ultra no-KYC',
-        'LetsExchange': '✅ Support réactif · ⭐ Depuis 2020 · 💳 Large choix'
+        'LetsExchange': '✅ Large choix · ⭐ Depuis 2021 · 💳 5000+ coins'
     };
 
     const badgeText = badges[exchangeName] || '';
