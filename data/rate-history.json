@@ -1,6 +1,14 @@
 {
-  "lastUpdated": "2026-01-06T08:59:55.144Z",
+  "lastUpdated": "2026-01-06T09:52:40.282Z",
   "rates": [
+    {
+      "timestamp": "2026-01-06T09:52:40.282Z",
+      "rates": {
+        "changenow": 206.0725585,
+        "exolix": 205.9851856,
+        "stealthex": 204.8235794
+      }
+    },
     {
       "timestamp": "2026-01-06T08:59:55.144Z",
       "rates": {
