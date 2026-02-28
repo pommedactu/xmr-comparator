@@ -1,6 +1,15 @@
 {
-  "lastUpdated": "2026-02-28T06:45:17.590Z",
+  "lastUpdated": "2026-02-28T07:30:53.276Z",
   "rates": [
+    {
+      "timestamp": "2026-02-28T07:30:53.276Z",
+      "rates": {
+        "changenow": 184.3250584,
+        "godex": 184.16448140900195,
+        "letsexchange": 182.58730605235104,
+        "stealthex": 192.751
+      }
+    },
     {
       "timestamp": "2026-02-28T06:45:17.590Z",
       "rates": {
@@ -1493,15 +1502,6 @@
         "godex": 200.62929911291812,
         "letsexchange": 199.719194378525,
         "stealthex": 205.398
-      }
-    },
-    {
-      "timestamp": "2026-02-19T02:35:38.380Z",
-      "rates": {
-        "changenow": 200.2331375,
-        "godex": 198,
-        "letsexchange": 197.19244239070957,
-        "stealthex": 202.31
       }
     }
   ]
